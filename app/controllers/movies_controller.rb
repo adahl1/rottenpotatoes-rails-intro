@@ -7,11 +7,22 @@ class MoviesController < ApplicationController
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
+   
     # will render app/views/movies/show.<extension> by default
   end
 
   def index
-    @movies = Movie.all
+    header = params[:header]
+    if header == 'title_header'
+      @movies = Movie.all.reorder('title')
+    
+      
+    elsif header == 'release_date_header'
+      @movies = Movie.all.reorder('release_date')
+      
+    else
+      @movies = Movie.all
+    end
   end
 
   def new
