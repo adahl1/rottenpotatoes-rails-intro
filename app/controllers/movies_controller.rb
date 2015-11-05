@@ -15,11 +15,13 @@ class MoviesController < ApplicationController
     header = params[:header]
     if header == 'title_header'
       @movies = Movie.all.reorder('title')
-    
+      @title_header_class = 'hilite'
+      @release_date_header_class = 'th'
       
     elsif header == 'release_date_header'
       @movies = Movie.all.reorder('release_date')
-      
+      @title_header_class = 'th'
+      @release_date_header_class = 'hilite'
     else
       @movies = Movie.all
     end
@@ -52,5 +54,9 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
-
+  
+  def ratings
+    @all_ratings = ['G','PG','PG-13','R']
+  end
+  
 end
